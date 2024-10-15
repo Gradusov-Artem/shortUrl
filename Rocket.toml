@@ -1,0 +1,2 @@
+[global.databases]
+url_db = { url = "postgres://postgres:7719150Artik@localhost/shortLink" }
