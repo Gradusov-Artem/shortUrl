@@ -8,7 +8,7 @@ rocket = { version = "0.5.0-rc.3", features = ["json", "tls"] }
 rocket_db_pools = { version = "0.1.0-rc.4", features = ["deadpool_postgres"] }
 deadpool-postgres = "0.10"  # для создания connection pool
 serde = { version = "1.0", features = ["derive"] }  # для сериализации(десериализации)
-tokio = { version = "1", features = ["full"] }
+tokio = { version = "1", features = ["full"] }  # Асинхронная работа
 
 [default.databases]
 url_db = { url = "postgres://postgres:7719150Artik@localhost/shortLink" }
