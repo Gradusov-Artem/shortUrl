@@ -96,7 +96,7 @@ func get_short_url(ctx iris.Context, db *pgxpool.Pool) {
 
 	_, err = db.Exec(context.Background(), "INSERT INTO urls (original_url, short_url, creation_date) VALUES ($1, $2, CURRENT_TIMESTAMP)", requestBody.URL, short_url)
 	if err != nil {
-		// Логирование ошибки
+		// логирование ошибки
 		log.Printf("Ошибка при вставке в базу данных: %v\n", err)
 		ctx.StatusCode(iris.StatusInternalServerError)
 		ctx.JSON(iris.Map{"error": "Ошибка при сохранении данных в базе данных"})
