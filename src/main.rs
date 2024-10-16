@@ -26,20 +26,17 @@ struct Url {
     original_url: String
 }
 
-/**
-Функция для вывода сообщения об ошибке
-Доступна по /timeout.
-*/
+/// Функция для вывода сообщения об ошибке
+/// Доступна по /timeout.
 #[get("/timeout")]
 async fn write_timeout_error() -> &'static str {
     "Возможно ссылка устарела, проверьте правильность ввода или создайте новую!"
 }
 
-/**
-Функция для получения original_url из short_url
-Предварительно осуществляется проверка на существование и актуальность ссылки
-Доступен по /<short_url>, <short_url> - сокращенная ссылка.
-*/
+
+/// Функция для получения original_url из short_url
+/// Предварительно осуществляется проверка на существование и актуальность ссылки
+/// Доступен по /<short_url>, <short_url> - сокращенная ссылка.
 #[get("/<short_url>")]
 async fn get_from_short_url(db: Connection<UrlDatabase>, short_url: String) ->  Redirect{
     let client: &Client = &*db;
@@ -57,11 +54,9 @@ async fn get_from_short_url(db: Connection<UrlDatabase>, short_url: String) ->  
     }
 }
 
-/**
-Функция для создания short_url из original_url
-Предварительно осуществляется проверка на существование ссылки в базе данных
-Доступен по /short, в body содержится url.
- */
+/// Функция для создания short_url из original_url
+/// Предварительно осуществляется проверка на существование ссылки в базе данных
+/// Доступен по /short, в body содержится url.
 #[post("/short", format = "json", data = "<url>")]
 async fn get_short_url(db: Connection<UrlDatabase>, url: Json<Url>) -> Json<Urls> {
     let client: &Client = &*db;
@@ -88,10 +83,8 @@ async fn get_short_url(db: Connection<UrlDatabase>, url: Json<Url>) -> Json<Urls
     })
 }
 
-/**
-Функция main
-Осуществляет создание config, connection pool и запуск сервера.
-*/
+/// Функция main
+/// Осуществляет создание config, connection pool и запуск сервера.
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {
     let mut cfg = Config::new();
@@ -111,9 +104,7 @@ async fn main() -> Result<(), rocket::Error> {
     Ok(())
 }
 
-/**
-Функция для создания сокращенной ссылки используя время UNIX.
-*/
+/// Функция для создания сокращенной ссылки используя время UNIX.
 fn generate_short_url() -> String {
     let short_url: String = SystemTime::now().duration_since(UNIX_EPOCH).expect("").as_secs().to_string();
     short_url
